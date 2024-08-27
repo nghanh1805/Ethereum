@@ -1,0 +1,7 @@
+.bg{
+    background-image: '../public/topography.svg';
+    object-fit: cover;
+}
+.App{
+    position: relative;
+}
