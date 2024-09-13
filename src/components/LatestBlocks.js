@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Card, Button, Divider } from 'antd';
+import { AppstoreOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 
 const initialBlocks = [
   { id: 20599269, age: '15 secs ago', feeRecipient: 'Titan Builder', txns: '209 txns', reward: '0.04847 Eth' },
@@ -30,54 +32,40 @@ function LatestBlocks() {
   };
 
   return (
-    <div className="bg-white  rounded-xl p-4 w-full border ">
-      <div className="flex justify-between items-center mb-4 border-b pb-5 ">
+    <Card className="w-full" style={{borderRadius:'12px'}}>
+      <div className="flex justify-between items-center mb-4">
         <h2 className="text-base font-semibold">Latest Blocks</h2>
-        <button className="text-xs hover:bg-gray-200 w-24 h-8 border rounded-md flex items-center justify-center space-x-2">
-          <i className='fas fa-th'></i>
-          <p>Customize</p>
-        </button>
-
+        <Button type="default" icon={<AppstoreAddOutlined />} size="small">Customize</Button>
       </div>
-      <div className="space-y-4">
-        {blocks.map((block) => (
-          <div key={block.id} className="flex justify-between items-center p-4 border-b pt-0">
-            <div className="flex items-center space-x-4">
-              <button className="flex items-center justify-center w-13 h-13 bg-gray-100 rounded-lg hover:bg-gray-200">
-                <i className="fas fa-cube text-gray-600 text-xl"></i>
-              </button>
-              <div>
-                <div className="text-base text-sky-600">{block.id}</div>
-                <div className="text-xs text-gray-500">{block.age}</div>
-              </div>
-            </div>
-
+      <Divider />
+      {blocks.map((block) => (
+        <div key={block.id} className="flex justify-between items-center p-4">
+          <div className="flex items-center space-x-4">
+          <i className="fas fa-cube text-gray-600 text-xl"></i>
             <div>
-              <div className="text-sm flex">Fee Recipient <p className='text-sky-600 ml-1'>{block.feeRecipient}</p></div>
-              <div className="flex text-sm">
-                <p className='text-sky-600'>{block.txns}</p>
-                <p className=' text-gray-500 ml-1'>in 12 secs</p>
-              </div>
+              <div className="text-base text-sky-600">{block.id}</div>
+              <div className="text-xs text-gray-500">{block.age}</div>
             </div>
-            <div>
-              <div className="text-xs font-bold w-20 h-6 border rounded-md text-gray-700 flex  items-center"><p className='ml-2'>{block.reward}</p></div>
-            </div>
-
           </div>
-        ))}
-      </div>
-      <div >
+          <div>
+            <div className="text-sm flex">Fee Recipient <span className='text-sky-600 ml-1'>{block.feeRecipient}</span></div>
+            <div className="flex text-sm">
+              <span className='text-sky-600'>{block.txns}</span>
+              <span className=' text-gray-500 ml-1'>in 12 secs</span>
+            </div>
+          </div>
+          <div className="text-xs font-bold w-20 h-6 border rounded-md text-gray-700 flex items-center justify-center">{block.reward}</div>
+        </div>
+      ))}
+      <Divider />
+      <div className="flex justify-center items-center">
         {!showAll ? (
-          <div className="flex justify-center items-center bg-gray-100 p-4">
-            <button onClick={handleViewAll} className="text-gray-600 hover:text-sky-600 text-xs font-semibold">VIEW ALL BLOCKS →</button>
-          </div>
+          <button onClick={handleViewAll} className="text-gray-600 hover:text-sky-600 text-xs font-semibold">VIEW ALL TRANSACTIONS →</button>
         ) : (
-          <div className="flex justify-center items-center bg-gray-100 p-4 ">
-            <button onClick={handleClose} className=" text-gray-600 hover:text-sky-600 text-xs font-semibold">RETURN BLOCK</button>
-          </div>
+          <button onClick={handleClose} className="text-gray-600 hover:text-sky-600 text-xs font-semibold">RETURN TRANSACTIONS</button>
         )}
       </div>
-    </div>
+    </Card>
   );
 }
 

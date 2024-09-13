@@ -1,31 +1,41 @@
 import React from 'react';
+import { Layout, Button, Typography } from 'antd';
+
+const { Header } = Layout;
+const { Text, Link } = Typography;
 
 export default function TopBar() {
     return (
-        <section className='h-12 border-b flex items-center justify-between px-5 text-xs sticky top-0 bg-white z-20'>
-            <div className='flex items-center space-x-4 '>
-                <div className='flex items-center space-x-2 text-gray-500'>
-                    <span>ETH Price:</span>
-                    <a href="#" className='text-blue-500'>$2,580.62</a>
-                    <span className='text-red-500'> (-3.04%)</span>
+        <Header className="topbar-header">
+            <div className="flex-container">
+                <div className="text-container">
+                    <Text className="text-primary">ETH Price:</Text>
+                    <Link href="#" style={{ color: '#1890ff', fontSize: '13px' }}>$2,580.62</Link>
+                    <Text type="danger" className="text-danger">(-3.04%)</Text>
                 </div>
-                <div className='flex items-center space-x-2 text-xs text-gray-500'>
-                    <i className='fas fa-gas-pump text-gray-400'></i>
-                    <span>Gas:</span>
-                    <a href='#' className='text-blue-500'>
+                <div className="text-container">
+                    <i className='fas fa-gas-pump icon'></i>
+                    <Text className="text-primary">Gas:</Text>
+                    <Link href="#" style={{ color: '#1890ff', fontSize: '13px' }}>
                         <span>0.877</span> Gwei
-                    </a>
+                    </Link>
                 </div>
             </div>
 
-            <div className='flex space-x-2'>
-                <button className="border  rounded-lg p-[0.6rem] px-3 hover:bg-gray-200">
-                    <i className="fas fa-sun text-blue-500 text-sm"></i>
-                </button>
-                <button className="border  rounded-lg p-[0.6rem] px-3 hover:bg-gray-200">
-                    <img className='h-5' src='https://etherscan.io/images/svg/brands/ethereum-original.svg' alt=' Logo' />
-                </button>
+            <div className="flex-container" style={{gap: '5px'}}>
+                <Button className="button"
+                    icon={<i className="fas fa-sun" style={{ color: '#1890ff', fontSize: '15px' }}></i>}
+                />
+                <Button className="button"
+                    style={{
+                        padding: '0.6rem 0.7rem',
+                    }}>
+                    <img
+                        src="https://etherscan.io/images/svg/brands/ethereum-original.svg"
+                        alt="Logo"
+                    />
+                </Button>
             </div>
-        </section>
+        </Header>
     );
 }
