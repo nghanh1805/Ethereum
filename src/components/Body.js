@@ -5,22 +5,31 @@ import LatestBlocks from './LatestBlocks';
 import LatestTransactions from './LatestTransactions';
 import { GlobalOutlined, DatabaseOutlined, DashboardOutlined } from '@ant-design/icons';
 import getEthStats from '../getethstats';
+import getPolygonStats from '../getpolygonstats';
+import getBnbStats from '../getbnbstats';
 
 const { Text } = Typography;
 
-export default function Body() {
+export default function Body({ selectedNetwork }) {
   const [ethStats, setEthStats] = useState(null);
 
   useEffect(() => {
-
-    const fetchEthStats = async () => {
-      const stats = await getEthStats();
+    const fetchStats = async () => {
+      let stats;
+      if (selectedNetwork === 'eth') {
+        stats = await getEthStats();
+      } else if (selectedNetwork === 'polygon') {
+        stats = await getPolygonStats();
+      } else if (selectedNetwork === 'bnb') {
+        stats = await getBnbStats();
+      }
       setEthStats(stats);
-      console.log("Ethereum Stats:", stats);
+      console.log(`${selectedNetwork.toUpperCase()} Stats:`, stats);
     };
 
-    fetchEthStats();
-  }, []);
+    fetchStats();
+  }, [selectedNetwork]);
+
   const data = [
     { date: "Aug 9", value: 900000 },
     { date: "Aug 16", value: 1300000 },
@@ -39,10 +48,7 @@ export default function Body() {
 
   return (
     <div className="body-container">
-      <Card
-        className="body-card"
-        Style={{ padding: '20px' }}
-      >
+      <Card className="body-card" Style={{ padding: '20px' }}>
         <Row gutter={16} className="body-row">
           {/* Column 1 */}
           <Col flex={1} className="body-col" style={{ paddingRight: '55px' }}>
@@ -81,7 +87,7 @@ export default function Body() {
                     <Text className="text-color">TRANSACTIONS</Text>
                     <br />
                     <Text className="text-link">
-                    {ethStats ? `${ethStats.transactionCount} (${ethStats.tps.toFixed(2)} TPS)` : 'Loading...'}
+                      {ethStats ? `${ethStats.transactionCount} (${ethStats.tps.toFixed(2)} TPS)` : 'Loading...'}
                     </Text>
                   </div>
                 </Space>
@@ -89,7 +95,7 @@ export default function Body() {
                   <Text className="text-color">MED GAS PRICE</Text>
                   <br />
                   <Text className="text-link">
-                   {ethStats ? `${(ethStats.gasPrice / 1e9).toFixed(3)} Gwei` : 'Loading...'}
+                    {ethStats ? `${(ethStats.gasPrice / 1e9).toFixed(3)} Gwei` : 'Loading...'}
                   </Text>
                 </div>
               </Row>
@@ -126,7 +132,7 @@ export default function Body() {
 
       <div className="latest-section">
         {/* Latest */}
-        <Row gutter={16} style={{ margin: '0 16px' }} >
+        <Row gutter={16} style={{ margin: '0 16px' }}>
           <Col span={12}>
             <LatestBlocks />
           </Col>

@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import './App.css';
 import TopBar from './components/TopBar';
 import Header from './components/Header';
@@ -7,13 +8,18 @@ import Body from './components/Body';
 import Footer from './components/Footer';
 
 function App() {
+  const [selectedNetwork, setSelectedNetwork] = useState('eth'); 
+
+  const handleNetworkChange = (network) => {
+    setSelectedNetwork(network);
+  };
 
   return (
     <div className="App">
-      <TopBar />
+      <TopBar selectedNetwork={selectedNetwork} onNetworkChange={handleNetworkChange} />
       <Header />
       <SearchBar />
-      <Body />
+      <Body selectedNetwork={selectedNetwork} />
       <Footer />
     </div>
   );

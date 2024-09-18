@@ -1,10 +1,11 @@
 import React from 'react';
-import { Layout, Button, Typography } from 'antd';
+import { Layout, Button, Typography, Select } from 'antd';
 
 const { Header } = Layout;
 const { Text, Link } = Typography;
+const { Option } = Select;
 
-export default function TopBar() {
+export default function TopBar({ selectedNetwork, onNetworkChange }) {
     return (
         <Header className="topbar-header">
             <div className="flex-container">
@@ -22,7 +23,17 @@ export default function TopBar() {
                 </div>
             </div>
 
-            <div className="flex-container" style={{gap: '5px'}}>
+            <div className="flex-container" style={{ gap: '5px', alignItems: 'center' }}>
+                <Select
+                    value={selectedNetwork} 
+                    style={{ width: 120 }}
+                    onChange={onNetworkChange} 
+                >
+                    <Option value="eth">Ethereum</Option>
+                    <Option value="polygon">Polygon</Option>
+                    <Option value="bnb">BNB</Option>
+                </Select>
+
                 <Button className="button"
                     icon={<i className="fas fa-sun" style={{ color: '#1890ff', fontSize: '15px' }}></i>}
                 />
