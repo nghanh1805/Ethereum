@@ -1,27 +1,20 @@
-import React, { useState } from 'react';
-import './App.css';
-import TopBar from './components/TopBar';
-import Header from './components/Header';
-import SearchBar from './components/SearchBar';
-import '@fortawesome/fontawesome-free/css/all.min.css';
-import Body from './components/Body';
-import Footer from './components/Footer';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Tsx from './Tsx';
+import Block from './Block';
 
 function App() {
-  const [selectedNetwork, setSelectedNetwork] = useState('eth'); 
-
-  const handleNetworkChange = (network) => {
-    setSelectedNetwork(network);
-  };
-
   return (
-    <div className="App">
-      <TopBar selectedNetwork={selectedNetwork} onNetworkChange={handleNetworkChange} />
-      <Header />
-      <SearchBar />
-      <Body selectedNetwork={selectedNetwork} />
-      <Footer />
-    </div>
+    <Router>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/tsx" element={<Tsx />} />
+          <Route path="/blocks" element={<Block />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

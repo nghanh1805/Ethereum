@@ -1,13 +1,14 @@
 import React from 'react';
 import { Dropdown, Space } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 function Header() {
   const menuItems = {
     blockchain: [
       {
         key: '1',
-        label: <a href="/txs">Transactions</a>,
+        label: <Link to="/tsx">Transactions</Link>,
       },
       {
         key: '2',
@@ -27,11 +28,11 @@ function Header() {
       },
       {
         key: '6',
-        label: <a href="/txsBlobs">View Blobs</a>,
+        label: <a href="/txsBlobs">View Blobs  <hr></hr></a>,
       },
       {
         key: '7',
-        label: <a href="/blocks">View Blocks</a>,
+        label: <Link to="/blocks">View Blocks</Link>,
       },
       {
         key: '8',
@@ -39,7 +40,7 @@ function Header() {
       },
       {
         key: '9',
-        label: <a href="/uncles">Uncles</a>,
+        label: <a href="/uncles">Uncles <hr></hr> </a>,
       },
       {
         key: '10',
