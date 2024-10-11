@@ -32,7 +32,7 @@ function LatestBlocks() {
   };
 
   return (
-    <Card className="w-full" style={{borderRadius:'12px'}}>
+    <Card id='card' className="w-full" style={{borderRadius:'12px'}}>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-base font-semibold">Latest Blocks</h2>
         <Button type="default" icon={<AppstoreAddOutlined />} size="small">Customize</Button>

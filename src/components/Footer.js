@@ -15,27 +15,31 @@ function Footer() {
         <AntFooter className="ant-footer">
             <div className="footer-container">
                 <Row justify="space-between" align="middle" className="footer-row border-b">
-                    <Space>
-                        <a href="#" className="social-link">
-                            <FaFacebookF style={{ fontSize: '16px' }} />
-                        </a>
-                        <a href="#" className="social-link">
-                            <FaTwitter style={{ fontSize: '16px' }} />
-                        </a>
-                        <a href="#" className="social-link">
-                            <FaGithub style={{ fontSize: '16px' }} />
-                        </a>
-                        <a href="#" className="social-link">
-                            <FaRedditAlien style={{ fontSize: '16px' }} />
-                        </a>
-                    </Space>
-                    <Button type="link" onClick={scrollToTop} className="back-to-top-button">
-                        <AiOutlineArrowUp style={{ marginRight: '8px' }} /> Back to top
-                    </Button>
+                    <Col xs={24} sm={12} md={8} lg={6}>
+                        <Space>
+                            <a href="#" className="social-link">
+                                <FaFacebookF style={{ fontSize: '16px' }} />
+                            </a>
+                            <a href="#" className="social-link">
+                                <FaTwitter style={{ fontSize: '16px' }} />
+                            </a>
+                            <a href="#" className="social-link">
+                                <FaGithub style={{ fontSize: '16px' }} />
+                            </a>
+                            <a href="#" className="social-link">
+                                <FaRedditAlien style={{ fontSize: '16px' }} />
+                            </a>
+                        </Space>
+                    </Col>
+                    <Col xs={24} sm={12} md={8} lg={6} className="back-to-top-container">
+                        <Button type="link" onClick={scrollToTop} className="back-to-top-button">
+                            <AiOutlineArrowUp style={{ marginRight: '8px' }} /> Back to top
+                        </Button>
+                    </Col>
                 </Row>
 
                 <Row justify="space-between" align="top" className="footer-row">
-                    <Col span={8}>
+                    <Col xs={24} md={8}>
                         <div>
                             <Space align="start">
                                 <img className='footer-logo' src='https://etherscan.io/images/svg/brands/ethereum-original.svg' alt='Logo' />
@@ -49,9 +53,9 @@ function Footer() {
                         </div>
                     </Col>
 
-                    <Col span={16}>
+                    <Col xs={24} md={16}>
                         <Row>
-                            <Col span={8}>
+                            <Col xs={12} sm={8}>
                                 <Title level={5} className="footer-title">Company</Title>
                                 <ul className="footer-ul">
                                     <li><a href="#" className="footer-link">About Us</a></li>
@@ -62,7 +66,7 @@ function Footer() {
                                     <li><a href="#" className="footer-link">Bug Bounty</a></li>
                                 </ul>
                             </Col>
-                            <Col span={8}>
+                            <Col xs={12} sm={8}>
                                 <Title level={5} className="footer-title">Community</Title>
                                 <ul className="footer-ul">
                                     <li><a href="#" className="footer-link">API Documentation</a></li>
@@ -71,9 +75,9 @@ function Footer() {
                                     <li><a href="#" className="footer-link">Newsletters</a></li>
                                 </ul>
                             </Col>
-                            <Col span={8}>
+                            <Col xs={12} sm={8}>
                                 <Title level={5} className="footer-title">Products & Services</Title>
-                                <ul className="footer-ul ">
+                                <ul className="footer-ul">
                                     <li><a href="#" className="footer-link">Advertise</a></li>
                                     <li><a href="#" className="footer-link">Explorer-as-a-Service (EaaS)</a></li>
                                     <li><a href="#" className="footer-link">API Plans</a></li>

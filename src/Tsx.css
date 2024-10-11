@@ -30,6 +30,8 @@
     align-items: center;
 }
 
+
+
 .dashboard {
     display: flex;
     flex-wrap: wrap;
@@ -179,6 +181,12 @@
   
     table {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .ad-text {
+      display: none;
     }
   }
   

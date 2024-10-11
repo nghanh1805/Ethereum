@@ -8,7 +8,7 @@ const getBlockDetails = async (blockNumber) => {
     const response = await axios.get(
       `https://api.etherscan.io/api?module=proxy&action=eth_getBlockByNumber&tag=${blockNumber}&boolean=true&apikey=${ETHERSCAN_API_KEY}`
     );
-    return response.data.result; // Dữ liệu block
+    return response.data.result; 
   } catch (error) {
     console.error('Error fetching block details:', error);
     return null;
