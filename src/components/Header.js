@@ -1,297 +1,150 @@
-import React from 'react';
-import { Dropdown, Space } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { DownOutlined, MenuOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
+
+const menuItemsData = {
+  blockchain: [
+    { key: "1", to: "/tsx", label: "Transactions" },
+    { key: "2", href: "/txsPending", label: "Pending Transactions" },
+    { key: "3", href: "/txsInternal", label: "Contract Internal Transactions" },
+    { key: "4", href: "/txsBeaconDeposit", label: "Beacon Deposits" },
+    { key: "5", href: "/txsBeaconWithdrawal", label: "Beacon Withdrawals" },
+    { key: "6", href: "/txsBlobs", label: "View Blobs", divider: true },
+    { key: "7", to: "/blocks", label: "View Blocks" },
+    { key: "8", href: "/blocks_forked", label: "Forked Blocks (Reorgs)" },
+    { key: "9", href: "/uncles", label: "Uncles", divider: true },
+    { key: "10", href: "/accounts", label: "Top Accounts" },
+    { key: "11", href: "/contractsVerified", label: "Verified Contracts" },
+  ],
+  tokens: [
+    { key: "1", href: "/tokens", label: "Top Tokens (ERC-20)" },
+    { key: "2", href: "/tokentxns", label: "Token Transfers (ERC-20)" },
+  ],
+  nfts: [
+    { key: "1", href: "/nft-top-contracts", label: "Top NFTs" },
+    { key: "2", href: "/nft-top-mints", label: "Top Mints" },
+    { key: "3", href: "/nft-trades", label: "Latest Trades" },
+    { key: "4", href: "/nft-transfers", label: "Latest Transfers" },
+    { key: "5", href: "/nft-latest-mints", label: "Latest Mints" },
+  ],
+  resources: [
+    { key: "1", href: "/charts", label: "Charts And Stats" },
+    { key: "2", href: "/topstat", label: "Top Statistics" },
+    { key: "3", href: "/leaderboard", label: "Leaderboard" },
+    { key: "4", href: "/directory", label: "Directory" },
+    { key: "5", href: "https://info.etherscan.com/newsletters/", label: "Newsletter" },
+    { key: "6", href: "https://info.etherscan.com/", label: "Knowledge Base" },
+  ],
+  developers: [
+    { key: "1", href: "/apis", label: "API Plans" },
+    { key: "2", href: "https://docs.etherscan.io/", label: "API Documentation" },
+    { key: "3", href: "/code-reader", label: "Code Reader" },
+    { key: "4", href: "/verifyContract", label: "Verify Contract" },
+    { key: "5", href: "/find-similar-contracts", label: "Similar Contract Search" },
+    { key: "6", href: "/searchcontract", label: "Smart Contract Search" },
+    { key: "7", href: "/contractdiffchecker", label: "Contract Diff Checker" },
+    { key: "8", href: "/vyper", label: "Vyper Online Compiler" },
+    { key: "9", href: "/opcode-tool", label: "Bytecode to Opcode" },
+    { key: "10", href: "/pushTx", label: "Broadcast Transaction" },
+  ],
+  more: [
+    {
+      type: "group",
+      label: "Tools",
+      children: [
+        { key: "1", href: "/unitconverter", label: "Unit Converter" },
+        { key: "2", href: "/exportData", label: "CSV Export" },
+        { key: "3", href: "/balancecheck-tool", label: "Account Balance Checker" },
+      ],
+    },
+    {
+      type: "group",
+      label: "Explore",
+      children: [
+        { key: "4", href: "/gastracker", label: "Gas Tracker" },
+        { key: "5", href: "/dex", label: "DEX Tracker" },
+        { key: "6", href: "/nodetracker", label: "Node Tracker" },
+      ],
+    },
+    {
+      type: "group",
+      label: "Services",
+      children: [
+        { key: "7", href: "/tokenapprovalchecker", label: "Token Approvals" },
+        { key: "8", href: "/verifiedSignatures", label: "Verified Signature" },
+        { key: "9", href: "/idm", label: "Input Data Messages (IDM)" },
+      ],
+    },
+  ],
+};
 
 function Header() {
-  const menuItems = {
-    blockchain: [
-      {
-        key: '1',
-        label: <Link to="/tsx">Transactions</Link>,
-      },
-      {
-        key: '2',
-        label: <a href="/txsPending">Pending Transactions</a>,
-      },
-      {
-        key: '3',
-        label: <a href="/txsInternal">Contract Internal Transactions</a>,
-      },
-      {
-        key: '4',
-        label: <a href="/txsBeaconDeposit">Beacon Deposits</a>,
-      },
-      {
-        key: '5',
-        label: <a href="/txsBeaconWithdrawal">Beacon Withdrawals</a>,
-      },
-      {
-        key: '6',
-        label: <a href="/txsBlobs">View Blobs  <hr></hr></a>,
-      },
-      {
-        key: '7',
-        label: <Link to="/blocks">View Blocks</Link>,
-      },
-      {
-        key: '8',
-        label: <a href="/blocks_forked">Forked Blocks (Reorgs)</a>,
-      },
-      {
-        key: '9',
-        label: <a href="/uncles">Uncles <hr></hr> </a>,
-      },
-      {
-        key: '10',
-        label: <a href="/accounts">Top Accounts</a>,
-      },
-      {
-        key: '11',
-        label: <a href="/contractsVerified">Verified Contracts</a>,
-      },
-    ],
-    tokens: [
-      {
-        key: '1',
-        label: <a href="/tokens">Top Tokens (ERC-20)</a>,
-      },
-      {
-        key: '2',
-        label: <a href="/tokentxns">Token Transfers (ERC-20)</a>,
-      },
-    ],
-    nfts: [
-      {
-        key: '1',
-        label: <a href="/nft-top-contracts">Top NFTs</a>,
-      },
-      {
-        key: '2',
-        label: <a href="/nft-top-mints">Top Mints</a>,
-      },
-      {
-        key: '3',
-        label: <a href="/nft-trades">Latest Trades</a>,
-      },
-      {
-        key: '4',
-        label: <a href="/nft-transfers">Latest Transfers</a>,
-      },
-      {
-        key: '5',
-        label: <a href="/nft-latest-mints">Latest Mints</a>,
-      },
-    ],
-    resources: [
-      {
-        key: '1',
-        label: <a href="/charts">Charts And Stats</a>,
-      },
-      {
-        key: '2',
-        label: <a href="/topstat">Top Statistics</a>,
-      },
-      {
-        key: '3',
-        label: <a href="/leaderboard">Leaderboard</a>,
-      },
-      {
-        key: '4',
-        label: <a href="/directory">Directory</a>,
-      },
-      {
-        key: '5',
-        label: <a href="https://info.etherscan.com/newsletters/">Newsletter</a>,
-      },
-      {
-        key: '6',
-        label: <a href="https://info.etherscan.com/">Knowledge Base</a>,
-      },
-    ],
-    developers: [
-      {
-        key: '1',
-        label: <a href="/apis">API Plans</a>,
-      },
-      {
-        key: '2',
-        label: <a href="https://docs.etherscan.io/">API Documentation</a>,
-      },
-      {
-        key: '3',
-        label: <a href="/code-reader">Code Reader</a>,
-      },
-      {
-        key: '4',
-        label: <a href="/verifyContract">Verify Contract</a>,
-      },
-      {
-        key: '5',
-        label: <a href="/find-similar-contracts">Similar Contract Search</a>,
-      },
-      {
-        key: '6',
-        label: <a href="/searchcontract">xsart Contract Search</a>,
-      },
-      {
-        key: '7',
-        label: <a href="/contractdiffchecker">Contract Diff Checker</a>,
-      },
-      {
-        key: '8',
-        label: <a href="/vyper">Vyper Online Compiler</a>,
-      },
-      {
-        key: '9',
-        label: <a href="/opcode-tool">Bytecode to Opcode</a>,
-      },
-      {
-        key: '10',
-        label: <a href="/pushTx">Broadcast Transaction</a>,
-      },
-    ],
-    more: [
-      {
-        type: 'group',
-        label: 'Tools',
-        children: [
-          {
-            key: '1',
-            label: <a href="/unitconverter">Unit Converter</a>,
-          },
-          {
-            key: '2',
-            label: <a href="/exportData">CSV Export</a>,
-          },
-          {
-            key: '3',
-            label: <a href="/balancecheck-tool">Account Balance Checker</a>,
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Explore',
-        children: [
-          {
-            key: '4',
-            label: <a href="/gastracker">Gas Tracker</a>,
-          },
-          {
-            key: '5',
-            label: <a href="/dex">DEX Tracker</a>,
-          },
-          {
-            key: '6',
-            label: <a href="/nodetracker">Node Tracker</a>,
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Services',
-        children: [
-          {
-            key: '7',
-            label: <a href="/tokenapprovalchecker">Token Approvals</a>,
-          },
-          {
-            key: '8',
-            label: <a href="/verifiedSignatures">Verified Signature</a>,
-          },
-          {
-            key: '9',
-            label: <a href="/idm">Input Data Messages (IDM)</a>,
-          },
-        ],
-      },
-    ],
+  const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const toggleMobileMenu = () => setMobileMenuVisible(!mobileMenuVisible);
+
+  const toggleDropdown = (key) => {
+    setActiveDropdown(activeDropdown === key ? null : key);
   };
 
+  const renderDropdown = (items, label, key) => (
+    <li className="header__menu-item">
+      <div onClick={() => toggleDropdown(key)} className="header__menu-link">
+        {label}
+        <DownOutlined className="header__menu-icon header__menu-icon--down" />
+      </div>
+      {activeDropdown === key && (
+        <ul className="header__submenu">
+          {items.map((item) => (
+            <li key={item.key} className="header__submenu-item">
+              {item.to ? (
+                <Link to={item.to} className="header__submenu-link">{item.label}</Link>
+              ) : (
+                <a href={item.href} className="header__submenu-link">{item.label}</a>
+              )}
+              {item.divider && <hr className="header__submenu-divider" />}
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  );
+
   return (
-    <header className="header">
-      <nav className="header-nav cursor-pointer">
-        <div>
+    <header className="header container mx-auto ">
+      <nav className="header__nav header__nav--cursor-pointer">
+        <div className="header__logo-container">
           <img
-            className="header-logo"
+            className="header__logo"
             src="https://etherscan.io/assets/svg/logos/logo-etherscan.svg"
             alt="Etherscan Logo"
           />
         </div>
-        <div>
-          <ul className="header-menu">
-            <li>
-              <a href="/" className="text-blue-400">
+        <div className="header__right">
+          <a href="/login" className="header__right-link">
+            <i className="far fa-user-circle"></i> Sign In
+          </a>
+          <MenuOutlined
+            className="header__mobile-menu-icon"
+            onClick={toggleMobileMenu}
+          />
+        </div>
+        <div
+          className={`header__menu ${mobileMenuVisible ? "" : "header__menu--mobile-hidden"}`}
+        >
+          <ul className="header__menu-list">
+            <li className="header__menu-item">
+              <a href="/" className="header__menu-link">
                 Home
               </a>
             </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.blockchain }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link">
-                  <Space>
-                    Blockchain
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.tokens }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link">
-                  <Space>
-                    Tokens
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.nfts }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link">
-                  <Space>
-                    NFTs
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.resources }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link">
-                  <Space>
-                    Resources
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.developers }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link">
-                  <Space>
-                    Developers
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li>
-              <Dropdown menu={{ items: menuItems.more }} trigger={['hover']}>
-                <a onClick={(e) => e.preventDefault()} className="header-link" style={{ width: '500px' }}>
-                  <Space>
-                    More
-                    <DownOutlined className="text-xs" />
-                  </Space>
-                </a>
-              </Dropdown>
-            </li>
-            <li className="header-divider"></li>
-            <li>
-              <a href="/login" className="header-link">
-                <i className="far fa-user-circle"></i> Sign In
-              </a>
-            </li>
+            {renderDropdown(menuItemsData.blockchain, "Blockchain", "blockchain")}
+            {renderDropdown(menuItemsData.tokens, "Tokens", "tokens")}
+            {renderDropdown(menuItemsData.nfts, "NFTs", "nfts")}
+            {renderDropdown(menuItemsData.resources, "Resources", "resources")}
+            {renderDropdown(menuItemsData.developers, "Developers", "developers")}
+            {renderDropdown(menuItemsData.more, "More", "more")}
           </ul>
         </div>
       </nav>

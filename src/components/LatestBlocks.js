@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Divider } from 'antd';
 import { AppstoreOutlined, AppstoreAddOutlined } from '@ant-design/icons';
 
@@ -20,6 +20,16 @@ const additionalBlocks = [
 function LatestBlocks() {
   const [blocks, setBlocks] = useState(initialBlocks);
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleViewAll = () => {
     setBlocks([...initialBlocks, ...additionalBlocks]);
@@ -33,22 +43,22 @@ function LatestBlocks() {
 
   return (
     <Card id='card' className="w-full" style={{borderRadius:'12px'}}>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-base font-semibold">Latest Blocks</h2>
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+        <h2 className="text-base font-semibold mb-2 sm:mb-0">Latest Blocks</h2>
         <Button type="default" icon={<AppstoreAddOutlined />} size="small">Customize</Button>
       </div>
       <Divider />
       {blocks.map((block) => (
-        <div key={block.id} className="flex justify-between items-center p-4">
-          <div className="flex items-center space-x-4">
-          <i className="fas fa-cube text-gray-600 text-xl"></i>
+        <div key={block.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4">
+          <div className="flex items-center space-x-4 mb-2 sm:mb-0">
+            <i className="fas fa-cube text-gray-600 text-xl"></i>
             <div>
               <div className="text-base text-sky-600">{block.id}</div>
               <div className="text-xs text-gray-500">{block.age}</div>
             </div>
           </div>
-          <div>
-            <div className="text-sm flex">Fee Recipient <span className='text-sky-600 ml-1'>{block.feeRecipient}</span></div>
+          <div className="mb-2 sm:mb-0">
+            <div className="text-sm flex">Fee Recipient <span className='text-sky-600 ml-1'>{isMobile ? block.feeRecipient.slice(0, 10) + '...' : block.feeRecipient}</span></div>
             <div className="flex text-sm">
               <span className='text-sky-600'>{block.txns}</span>
               <span className=' text-gray-500 ml-1'>in 12 secs</span>

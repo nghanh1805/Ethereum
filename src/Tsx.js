@@ -1,10 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import TopBar from './components/TopBar';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import './Tsx.css';
-import { Typography, Pagination } from 'antd';
-import { getTransactions } from './Tsx_API';
+import {
+  ArrowRightOutlined,
+  CopyOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { Table, Tooltip, Typography } from "antd";
+import React, { useEffect, useState } from "react";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import TopBar from "./components/TopBar";
+import "./Tsx.css";
+import { getTransactions } from "./Tsx_API";
 
 const { Text, Link } = Typography;
 
@@ -23,7 +29,9 @@ export default function Tsx() {
 
   useEffect(() => {
     const fetchTransactions = async () => {
-      const txData = await getTransactions('0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe');
+      const txData = await getTransactions(
+        "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe"
+      );
       setTransactions(txData);
     };
 
@@ -32,18 +40,189 @@ export default function Tsx() {
 
   const indexOfLastTransaction = currentPage * transactionsPerPage;
   const indexOfFirstTransaction = indexOfLastTransaction - transactionsPerPage;
-  const currentTransactions = transactions.slice(indexOfFirstTransaction, indexOfLastTransaction);
+  const currentTransactions = transactions.slice(
+    indexOfFirstTransaction,
+    indexOfLastTransaction
+  );
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
+  const columns = [
+    {
+      title: (
+        <Tooltip title="Click to see more details">
+          <QuestionCircleOutlined style={{ color: "gray" }} />
+        </Tooltip>
+      ),
+      dataIndex: "icon",
+      key: "icon",
+      render: () => (
+        <div
+          className="icon-box"
+          style={{ width: "40px", textAlign: "center" }}
+        >
+          <EyeOutlined />
+        </div>
+      ),
+    },
+    {
+      title: "Transaction Hash",
+      dataIndex: "hash",
+      key: "hash",
+      render: (text) => (
+        <span
+          className="custom-color"
+          style={{
+            maxWidth: "150px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {truncateString(text || "0xffebbfd38c63...", 10)}{" "}
+          <CopyOutlined style={{ color: "gray" }} />
+        </span>
+      ),
+    },
+    {
+      title: () => (
+        <span>
+          Method{" "}
+          <Tooltip title="Contract execution method">
+            <QuestionCircleOutlined
+              style={{ color: "gray", marginLeft: "4px" }}
+            />
+          </Tooltip>
+        </span>
+      ),
+      dataIndex: "method",
+      key: "method",
+      render: (text) => (
+        <span
+          className="method-box"
+          style={{
+            maxWidth: "100px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {text || "Transfer"}
+        </span>
+      ),
+    },
+    {
+      title: "Block",
+      dataIndex: "blockNumber",
+      key: "blockNumber",
+      render: (text) => (
+        <span
+          className="custom-color"
+          style={{
+            maxWidth: "80px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {text || 20825959}
+        </span>
+      ),
+    },
+    {
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
+      render: (text) => (
+        <span
+          style={{
+            maxWidth: "80px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {formatAge(7)}
+        </span>
+      ),
+    },
+    {
+      title: "From",
+      dataIndex: "from",
+      key: "from",
+      render: (text) => (
+        <span
+          className="custom-color"
+          style={{
+            maxWidth: "150px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {truncateString(text || "titanbuilder.eth", 10)}{" "}
+          <CopyOutlined style={{ color: "gray" }} />
+        </span>
+      ),
+    },
+    {
+      title: "To",
+      dataIndex: "to",
+      key: "to",
+      render: (text) => (
+        <span
+          className="custom-color"
+          style={{
+            maxWidth: "150px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <ArrowRightOutlined className="arrow-icon-box" />
+          {truncateString(text || "Lido: Execution Layer R...", 10)}{" "}
+          <CopyOutlined style={{ color: "gray" }} />
+        </span>
+      ),
+    },
+    {
+      title: "Amount",
+      dataIndex: "value",
+      key: "value",
+      render: (text) =>
+        `${parseFloat((text || 0.064187738) / 10 ** 18).toFixed(5)} ETH`,
+    },
+    {
+      title: "Txn Fee",
+      dataIndex: "txnFee",
+      key: "txnFee",
+      render: (_, record) => (
+        <Text
+          style={{
+            fontSize: "13px",
+            color: "grey",
+            maxWidth: "80px",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {parseFloat(
+            (record.gasUsed * record.gasPrice) / 10 ** 18 || 0.00021916
+          ).toFixed(8)}
+        </Text>
+      ),
+    },
+  ];
+
   return (
-    <div>
+    <>
       <TopBar />
       <Header />
-      <div className="body-container">
-        <div className="content-container">
+      <div className="body-container px-4">
+        <div className="container mx-auto">
           <h1 className="title-tsx">
             Transactions
             <hr className="custom-hr" />
@@ -53,12 +232,16 @@ export default function Tsx() {
             <img
               src="https://etherscan.io/images/gen/stake-4_20.png"
               alt="Stake"
-              style={{ height: '24px', marginLeft: '8px' }}
+              style={{ height: "24px", marginLeft: "8px" }}
             />
-            <strong style={{ marginLeft: '8px' }}>Stake:</strong>
-            <span style={{ marginLeft: '8px' }}>
-              200% Bonus, 75k Raffle, Best VIP Program, Instant Withdrawals - Provably Fair.
-              <Link href="https://stake.mba/vi?tab=register&modal=auth&offer=butadscn5e&c=aWDbBpUc&clickId=522oEzGaCkTARxWKsuHNeG&utm_medium=cpc&utm_campaign=sb_scan5" className="link">
+            <strong style={{ marginLeft: "8px" }}>Stake:</strong>
+            <span style={{ marginLeft: "8px" }}>
+              200% Bonus, 75k Raffle, Best VIP Program, Instant Withdrawals -
+              Provably Fair.
+              <Link
+                href="https://stake.mba/vi?tab=register&modal=auth&offer=butadscn5e&c=aWDbBpUc&clickId=522oEzGaCkTARxWKsuHNeG&utm_medium=cpc&utm_campaign=sb_scan5"
+                className="link"
+              >
                 Claim Bonus
               </Link>
             </span>
@@ -68,7 +251,10 @@ export default function Tsx() {
             <div className="stats-card">
               <div className="stats-title">TRANSACTIONS (24H)</div>
               <div className="stats-value">
-                1,135,378 <span className="stats-percentage" style={{ color: 'green' }}>(6.73%)</span>
+                1,135,378{" "}
+                <span className="stats-percentage" style={{ color: "green" }}>
+                  (6.73%)
+                </span>
               </div>
             </div>
 
@@ -83,7 +269,9 @@ export default function Tsx() {
               <div className="stats-title">NETWORK TRANSACTIONS FEE (24H)</div>
               <div className="stats-value">
                 766.69 <span>ETH</span>
-                <span className="stats-percentage" style={{ color: 'green' }}>(30.78%)</span>
+                <span className="stats-percentage" style={{ color: "green" }}>
+                  (30.78%)
+                </span>
               </div>
             </div>
 
@@ -91,69 +279,31 @@ export default function Tsx() {
               <div className="stats-title">AVG. TRANSACTION FEE (24H)</div>
               <div className="stats-value">
                 7.02 <span>USD</span>
-                <span className="stats-percentage" style={{ color: 'green' }}>(69.71%)</span>
+                <span className="stats-percentage" style={{ color: "green" }}>
+                  (69.71%)
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="transaction-table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th><i className="fas fa-question-circle" style={{ color: 'gray', marginLeft: '8px' }}></i></th>
-                  <th>Transaction Hash</th>
-                  <th>Method <i className="fas fa-question-circle" style={{ color: 'gray', marginLeft: '4px' }}></i></th>
-                  <th>Block</th>
-                  <th className="custom-color">Age</th>
-                  <th>From</th>
-                  <th>To</th>
-                  <th className="custom-color">Amount</th>
-                  <th className="custom-color">Txn Fee</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentTransactions.map((tx, index) => (
-                  <tr key={index}>
-                    <td className="icon-cell">
-                      <div className="icon-box">
-                        <i className="far fa-eye"></i>
-                      </div>
-                    </td>
-                    <td className="custom-color">
-                      {truncateString(tx.hash || '0xffebbfd38c63...', 10)} <i className="far fa-copy" style={{ color: 'gray' }}></i>
-                    </td>
-                    <td>
-                      <span className="method-box">{tx.method || 'Transfer'}</span>
-                    </td>
-                    <td className="custom-color">{tx.blockNumber || 20825959}</td>
-                    <td>{formatAge(7)}</td>
-                    <td className="custom-color">
-                      {truncateString(tx.from || 'titanbuilder.eth', 10)} <i className="far fa-copy" style={{ color: 'gray' }}></i>
-                    </td>
-                    <td className="custom-color">
-                      <div className="arrow-icon-box">
-                        <i className="fas fa-arrow-right"></i>
-                      </div>
-                      {truncateString(tx.to || 'Lido: Execution Layer R...', 10)} <i className="far fa-copy" style={{ color: 'gray' }}></i>
-                    </td>
-                    <td>{parseFloat((tx.value || 0.064187738) / 10 ** 18).toFixed(5)} ETH</td>
-                    <td style={{ fontSize: '13px', color: 'grey' }}>{parseFloat(tx.gasUsed * tx.gasPrice / 10 ** 18 || 0.00021916).toFixed(8)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <Pagination
-              current={currentPage}
-              pageSize={transactionsPerPage}
-              total={transactions.length}
-              onChange={handlePageChange}
-              showSizeChanger={false}
-              className='pagination'
-            />
-          </div>
+            <Table
+            className="w-full overflow-x-auto"
+              style={{ marginTop: "20px" }}
+            columns={columns}
+            dataSource={currentTransactions}
+            pagination={{
+              current: currentPage,
+              pageSize: transactionsPerPage,
+              total: transactions.length,
+              onChange: handlePageChange,
+              showSizeChanger: false,
+              className: "pagination",
+            }}
+            rowKey={(record, index) => index}
+          />
         </div>
       </div>
       <Footer />
-    </div>
+    </>
   );
 }

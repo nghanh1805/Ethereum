@@ -33,8 +33,9 @@
 
 
 .dashboard {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
     margin: 0px;
     margin-top: 25px;
 }
@@ -43,9 +44,8 @@
     background-color: #fff;
     border-radius: 12px;
     border: 1px solid rgb(230, 229, 229);
-    margin: 9px;
-    width: 277px;
-    height: 80px;
+    padding: 10px;
+    height: inherit;
 }
 
 .stats-title {
@@ -175,6 +175,9 @@
 
 
   @media screen and (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
     .transaction-table-container {
       overflow-x: auto;
     }
@@ -191,3 +194,8 @@
   }
   
 
+@media (max-width: 400px) {
+    .dashboard {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

@@ -1,0 +1,102 @@
+.body-container {
+  background-color: #F8FAFC;
+  padding-bottom: 96px;
+  min-height: 100vh;
+
+}
+
+.body-card {
+  border-radius: 12px;
+  transform: translateY(-24px);
+}
+
+.body-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.body-col {
+  border-right: 1px solid #f0f0f0;
+}
+
+.body-logo {
+  height: 36px;
+  margin-right: 16px;
+}
+
+.icon-style {
+  font-size: 24px;
+  color: #595959;
+  margin-right: 16px;
+}
+
+.text-color {
+  color: #4B5563;
+  font-size: 12.5px;
+}
+
+.text-link {
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.text-strong {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.chart-container {
+  padding: 0 16px;
+}
+
+.border-b {
+  border-bottom: 1px solid #f0f0f0;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.gas-price, .safe-block {
+  text-align: right;
+}
+
+@media (max-width: 1023px) {
+  .body-card {
+    margin: 10px;
+    margin-top: -24px;
+  }
+
+  .body-col {
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 16px;
+    margin-bottom: 16px;
+  }
+
+  .body-col:last-child {
+    border-bottom: none;
+  }
+
+  .chart-container {
+    padding: 0;
+  }
+
+  .latest-section {
+    padding-top: 10px;
+  }
+
+  .gas-price, .safe-block {
+    text-align: left;
+    margin-top: 8px;
+  }
+
+  .icon-style {
+    font-size: 20px;
+  }
+
+  .text-color,
+  .text-link,
+  .text-strong {
+    font-size: 12px;
+  }
+}

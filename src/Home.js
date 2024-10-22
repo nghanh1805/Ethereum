@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import './Home.css';
 import TopBar from './components/TopBar';
 import Header from './components/Header';
-import SearchBar from './components/SearchBar';
+import SearchBar from './components/SearchBar/SearchBar';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import Body from './components/Body';
+import Body from './components/Body/Body';
 import Footer from './components/Footer';
 
 function Home() {
